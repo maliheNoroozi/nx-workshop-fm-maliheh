@@ -7,14 +7,14 @@ import {
 } from '@nrwl/devkit';
 
 function getScopes(projectMap: Map<string, ProjectConfiguration>) {
-  const projects: any[] = Object.values(projectMap);
+  const projects: ProjectConfiguration[] = Object.values(projectMap);
   const allScopes: string[] = projects
     .map((project) =>
       project.tags.filter((tag: string) => tag.startsWith('scope:'))
     )
     .reduce((acc, tags) => [...acc, ...tags], [])
     .map((scope: string) => scope.slice(6));
-  return [...new Set(allScopes)];
+  return [...Array.from(new Set(allScopes))];
 }
 
 function replaceScopes(content: string, scopes: string[]): string {
